@@ -3,6 +3,10 @@ sudo: false
 jdk:
   - oraclejdk8
 
+env:
+  global:
+    secure: gYgFUzcyalaY4aeIn5Tng1GFd0hGgf/g2pm0GtntZXXb6osJeZ8HkMee1JaUoMHSTr8IZ8kx6MUq8KINsK5vvyj6GWHdkUukPCm9kOBbltvXSenjvwRDAVnsn5/Ir8777nXDAAUxzPBpLpBewZb6kAjIXadzzw/npVadJ2TRrETgQnnvYdgs2cKPtIoPwff7hBx1sfOSGGllD8QHf8p1uMbJ0NKE9v6ugwjmY76RY7lf4VPJhV15mm623PC0iMIw566TpiFmW9uFMCCKVA9Kr0sb2SUG+ZWS8aKfLo9yY9Oq2E7mAyTq11HaXVzFYoerKxmTNGPpK3FezkAU6/LkNCWcz5YxaCbAUykCJZQwumpUfOhP9tY8/J3sOKhdzCwAo0dT1rH8S3AHsJjwR0x+0d+Bw1ILI6+tHr5LAp3Ko5BjS66j34wfO0F2LKWjfigIvoXF1cm0RbjlUxkK+g8nKxPXNYMqgpTLK/TvduWTcy1ILz+qw0nz43RmJOW3aUnrGAju15k4WHR9zHH/LdyqPhxRQqC5qSSW/foJRPRvrdQRvqMkfK2E9o84bZJI3n923jKk34CW8L7oh5KxFIFielC5UL/DpnIzKbsaTukDO+4nFqt03JiIHr5J61HIvB1gOvT7/1A4kZ+Nk9OwDKcMAzBo9e/R+dVZF5qVVh6Tnx0=
+
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -14,3 +18,9 @@ cache:
 
 install: ./gradlew build
 script: ./gradlew test
+
+deploy:
+  provider: script
+  script: ./gradlew bintrayUpload
+  on:
+    tags: true
