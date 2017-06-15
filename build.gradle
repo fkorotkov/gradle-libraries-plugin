@@ -1,0 +1,64 @@
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'maven-publish'
+apply plugin: 'java-library'
+
+ext {
+  current_version = '0.1'
+}
+
+buildscript {
+  repositories {
+    jcenter()
+    maven { setUrl("https://repo.gradle.org/gradle/repo") }
+  }
+  dependencies {
+    classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3"
+  }
+}
+
+bintray {
+  user = "fkorotkov"
+  key  = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+  publications = ['maven']
+  pkg {
+    repo = 'maven'
+    name = 'gradle-libraries-plugin'
+    userOrg = 'fkorotkov'
+    licenses = ['MIT']
+    vcsUrl = 'git@github.com:fkorotkov/gradle-libraries-plugin.git'
+    version {
+      name = current_version
+      desc = 'Libraries Plugin for Gradle'
+      released  = new Date()
+    }
+  }
+}
+
+publishing {
+  publications {
+    maven(MavenPublication) {
+      groupId 'com.fkorotkov'
+      artifactId 'gradle-libraries-plugin'
+      version current_version
+      from components.java
+      artifact sourceJar
+    }
+  }
+}
+
+task sourceJar(type: Jar) {
+  from sourceSets.main.allSource
+  classifier "sources"
+}
+
+repositories {
+  jcenter()
+  maven { setUrl("https://repo.gradle.org/gradle/repo") }
+}
+
+dependencies {
+  compileOnly gradleApi()
+
+  implementation 'com.github.ben-manes:gradle-versions-plugin:0.15.0'
+  implementation "com.google.code.gson:gson:2.8.0"
+}
