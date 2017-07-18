@@ -16,8 +16,7 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
-install: ./gradlew build
-script: ./gradlew test
+install: ./gradlew check
 
 deploy:
   provider: script
