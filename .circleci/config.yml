@@ -12,7 +12,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "dependencies.json" }}
+          - v1-dependencies-{{ checksum "build.gradle" }}
           - v1-dependencies-
 
       - run: gradle check
@@ -21,4 +21,4 @@ jobs:
           paths:
             - ~/.gradle/caches/
             - ~/.gradle/wrapper/
-          key: v1-dependencies-{{ checksum "dependencies.json" }}
+          key: v1-dependencies-{{ checksum "build.gradle" }}
