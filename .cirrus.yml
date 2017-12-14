@@ -1,0 +1,14 @@
+container:
+  image: gradle:4.3.1-jdk8
+
+environment:
+  GRADLE_HOME: /tmp
+  JVM_OPTS: -Xmx3200m
+
+check_task:
+  gradle_cache:
+    folder: $GRADLE_HOME/.gradle/caches
+  check_script: gradle check
+  before_cache_script:
+    - rm -f  $GRADLE_HOME/.gradle/caches/modules-2/modules-2.lock
+    - rm -fr $GRADLE_HOME/.gradle/caches/*/plugin-resolution/
