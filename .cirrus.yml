@@ -3,6 +3,7 @@ container:
 
 environment:
   GRADLE_HOME: /tmp
+  JVM_OPTS: -Xmx3200m
 
 check_task:
   gradle_cache:
