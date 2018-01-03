@@ -1,15 +1,14 @@
 container:
-  image: gradle:4.3.1-jdk8
+  image: gradle:4.4-jdk8
 
 environment:
-  HOME: /tmp
   JVM_OPTS: -Xmx3200m
 
 check_task:
-  printenv_script: printenv
   gradle_cache:
-    folder: $HOME/.gradle/caches
+    folder: ~/.gradle/caches
   check_script: gradle check
-  before_cache_script:
-    - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-    - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+  cleanup_before_cache_script:
+    - rm -rf ~/.gradle/caches/$GRADLE_VERSION/
+    - rm -f ~/.gradle/caches/user-id.txt
+    - find ~/.gradle/caches/ -name "*.lock" -type f -delete
