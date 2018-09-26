@@ -1,6 +1,6 @@
 # Gradle Libraries Plugin
 
-[![Build Status](https://travis-ci.org/fkorotkov/k8s-kotlin-dsl.svg?branch=master)](https://travis-ci.org/fkorotkov/gradle-libraries-plugin)
+[![Build Status](https://api.cirrus-ci.com/github/fkorotkov/gradle-libraries-plugin.svg)](https://cirrus-ci.com/github/fkorotkov/gradle-libraries-plugin)
 [![Download](https://api.bintray.com/packages/fkorotkov/maven/gradle-libraries-plugin/images/download.svg) ](https://bintray.com/fkorotkov/maven/gradle-libraries-plugin/_latestVersion)
 
 This plugin allows to specify versions of external libraries in a centralized place and use them across the project. It's specifically useful for Gradle multi-projects.
