@@ -1,9 +1,9 @@
 apply plugin: 'com.jfrog.bintray'
-apply plugin: 'maven-publish'
 apply plugin: 'java-library'
+apply plugin: 'maven-publish'
 
 ext {
-  current_version = '0.1'
+  current_version = '0.2'
 }
 
 buildscript {
@@ -12,7 +12,7 @@ buildscript {
     maven { setUrl("https://repo.gradle.org/gradle/repo") }
   }
   dependencies {
-    classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3"
+    classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4"
   }
 }
 
@@ -34,6 +34,11 @@ bintray {
   }
 }
 
+task sourcesJar(type: Jar) {
+  from sourceSets.main.allJava
+  archiveClassifier = 'sources'
+}
+
 publishing {
   publications {
     maven(MavenPublication) {
@@ -41,14 +46,9 @@ publishing {
       artifactId 'gradle-libraries-plugin'
       version current_version
       from components.java
-      artifact sourceJar
+      artifact sourcesJar
     }
   }
-}
-
-task sourceJar(type: Jar) {
-  from sourceSets.main.allSource
-  classifier "sources"
 }
 
 repositories {

@@ -1,5 +1,5 @@
 container:
-  image: gradle:4.4-jdk8
+  image: gradle:jdk8
 
 environment:
   JVM_OPTS: -Xmx3200m
