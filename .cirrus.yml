@@ -14,5 +14,4 @@ deploy_task:
   only_if: $CIRRUS_TAG != ''
   env:
     BINTRAY_API_KEY: ENCRYPTED[05d052f5687232da61d8da3006acc7200062b96fedc939002ee4d3657f44b11fe988cb1c81cfc5a601b2e9f9a70dfd59]
-  check_script: gradle check
   upload_script: gradle bintrayUpload
