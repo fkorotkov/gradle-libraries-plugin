@@ -1,9 +1,6 @@
 container:
   image: gradle:jdk8
 
-environment:
-  JVM_OPTS: -Xmx3200m
-
 check_task:
   gradle_cache:
     folder: ~/.gradle/caches
@@ -12,3 +9,10 @@ check_task:
     - rm -rf ~/.gradle/caches/$GRADLE_VERSION/
     - rm -f ~/.gradle/caches/user-id.txt
     - find ~/.gradle/caches/ -name "*.lock" -type f -delete
+
+deploy_task:
+  only_if: $CIRRUS_TAG != ''
+  env:
+    BINTRAY_API_KEY: ENCRYPTED[05d052f5687232da61d8da3006acc7200062b96fedc939002ee4d3657f44b11fe988cb1c81cfc5a601b2e9f9a70dfd59]
+  check_script: gradle check
+  upload_script: gradle bintrayUpload
