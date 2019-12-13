@@ -3,7 +3,7 @@ apply plugin: 'java-library'
 apply plugin: 'maven-publish'
 
 ext {
-  current_version = '0.2'
+  current_version = '1.0'
 }
 
 buildscript {
@@ -59,6 +59,6 @@ repositories {
 dependencies {
   compileOnly gradleApi()
 
-  implementation 'com.github.ben-manes:gradle-versions-plugin:0.15.0'
-  implementation "com.google.code.gson:gson:2.8.0"
+  implementation 'com.github.ben-manes:gradle-versions-plugin:0.27.0'
+  implementation "com.google.code.gson:gson:2.8.6"
 }

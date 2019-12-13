@@ -19,7 +19,7 @@ buildscript {
     jcenter()
   }
   dependencies {
-    classpath 'com.fkorotkov:gradle-libraries-plugin:0.1'
+    classpath 'com.fkorotkov:gradle-libraries-plugin:1.0'
   }
 }
 ```
@@ -80,14 +80,16 @@ It's not a secret that it's really hard keep libraries up to date especially whe
 Here is an example of a `resolutionStrategy` that rejects versions that contain `dev` or `eap`.
 
 ```groovy
-updateLibraries.resolutionStrategy = {
-  componentSelection { rules ->
-    rules.all { ComponentSelection selection ->
-      boolean rejected = ['dev', 'eap'].any { qualifier ->
-        selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
-      }
-      if (rejected) {
-        selection.reject('dev version')
+updateLibraries {
+  resolutionStrategy {
+    componentSelection { rules ->
+      rules.all { ComponentSelection selection ->
+        boolean rejected = ['dev', 'eap'].any { qualifier ->
+          selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
+        }
+        if (rejected) {
+          selection.reject('dev version')
+        }
       }
     }
   }

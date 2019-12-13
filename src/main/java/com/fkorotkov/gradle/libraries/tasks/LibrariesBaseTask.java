@@ -4,7 +4,8 @@ import com.fkorotkov.gradle.libraries.model.ProjectLibraries;
 import com.fkorotkov.gradle.libraries.model.DependencyUpdatesReport;
 import com.github.benmanes.gradle.versions.updates.DependencyUpdates;
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesReporter;
-import groovy.lang.Closure;
+import com.github.benmanes.gradle.versions.updates.resolutionstrategy.ResolutionStrategyWithCurrent;
+import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.Input;
@@ -15,7 +16,7 @@ public class LibrariesBaseTask extends DefaultTask {
   @Input
   public String revision = "release";
 
-  public Closure resolutionStrategy = null;
+  public Action<? super ResolutionStrategyWithCurrent> resolutionStrategy = null;
 
   protected BufferedWriter getDependenciesFileWriter() throws IOException {
     return new BufferedWriter(new FileWriter(getDependenciesFile()));
