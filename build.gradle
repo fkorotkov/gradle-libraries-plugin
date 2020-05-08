@@ -1,52 +1,30 @@
-apply plugin: 'com.jfrog.bintray'
-apply plugin: 'java-library'
-apply plugin: 'maven-publish'
-
-ext {
-  current_version = '1.0'
+plugins {
+  id "com.gradle.plugin-publish" version '0.10.1'
+  id "java-gradle-plugin"
+  id "java-library"
 }
 
-buildscript {
-  repositories {
-    jcenter()
-    maven { setUrl("https://repo.gradle.org/gradle/repo") }
-  }
-  dependencies {
-    classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4"
-  }
-}
+version = System.getenv().getOrDefault("CIRRUS_TAG", "1.0")
+group = "com.github.fkorotkov"
 
-bintray {
-  user = "fkorotkov"
-  key  = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
-  publications = ['maven']
-  pkg {
-    repo = 'maven'
-    name = 'gradle-libraries-plugin'
-    userOrg = 'fkorotkov'
-    licenses = ['MIT']
-    vcsUrl = 'git@github.com:fkorotkov/gradle-libraries-plugin.git'
-    version {
-      name = current_version
-      desc = 'Libraries Plugin for Gradle'
-      released  = new Date()
+gradlePlugin {
+  plugins {
+    librariesPlugin {
+      id = 'com.github.fkorotkov'
+      implementationClass = 'com.fkorotkov.gradle.libraries.LibrariesPlugin'
     }
   }
 }
 
-task sourcesJar(type: Jar) {
-  from sourceSets.main.allJava
-  archiveClassifier = 'sources'
-}
+pluginBundle {
+  website = 'https://github.com/fkorotkov/gradle-libraries-plugin'
+  vcsUrl = 'https://github.com/fkorotkov/gradle-libraries-plugin.git'
+  description = 'Specify versions of external libraries in a centralized place and use them across the sub-projects'
+  tags = ['dependencies', 'dependency-management']
 
-publishing {
-  publications {
-    maven(MavenPublication) {
-      groupId 'com.fkorotkov'
-      artifactId 'gradle-libraries-plugin'
-      version current_version
-      from components.java
-      artifact sourcesJar
+  plugins {
+    librariesPlugin {
+      displayName = 'Gradle Libraries Plugin'
     }
   }
 }
@@ -59,6 +37,6 @@ repositories {
 dependencies {
   compileOnly gradleApi()
 
-  implementation 'com.github.ben-manes:gradle-versions-plugin:0.27.0'
+  implementation 'com.github.ben-manes:gradle-versions-plugin:0.28.0'
   implementation "com.google.code.gson:gson:2.8.6"
 }

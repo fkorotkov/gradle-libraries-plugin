@@ -8,6 +8,7 @@ import com.google.gson.GsonBuilder;
 import org.gradle.api.tasks.TaskAction;
 
 import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,7 +20,7 @@ public class SyncLibrariesTask extends LibrariesBaseTask {
   public void sync() throws IOException {
     DependencyUpdatesReport report = runReport();
     ProjectLibraries projectLibraries = createdUpdateLibraries(report);
-    BufferedWriter dependenciesFileWriter = getDependenciesFileWriter();
+    BufferedWriter dependenciesFileWriter = new BufferedWriter(new FileWriter(getDependenciesFile()));
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     gson.toJson(projectLibraries, dependenciesFileWriter);
     dependenciesFileWriter.close();

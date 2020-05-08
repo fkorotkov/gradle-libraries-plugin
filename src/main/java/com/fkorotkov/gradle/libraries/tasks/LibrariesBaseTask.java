@@ -9,19 +9,26 @@ import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.OutputDirectories;
+import org.gradle.api.tasks.OutputFile;
 
 import java.io.*;
 
-public class LibrariesBaseTask extends DefaultTask {
+public abstract class LibrariesBaseTask extends DefaultTask {
+  private String revision = "release";
+
   @Input
-  public String revision = "release";
+  public String getRevision() {
+    return revision;
+  }
+
+  public void setRevision(String revision) {
+    this.revision = revision;
+  }
 
   public Action<? super ResolutionStrategyWithCurrent> resolutionStrategy = null;
 
-  protected BufferedWriter getDependenciesFileWriter() throws IOException {
-    return new BufferedWriter(new FileWriter(getDependenciesFile()));
-  }
-
+  @OutputFile
   protected File getDependenciesFile() {
     return new File(getProject().getRootProject().getRootDir(), "dependencies.json");
   }
@@ -37,7 +44,7 @@ public class LibrariesBaseTask extends DefaultTask {
   protected DependencyUpdatesReport runReport() throws FileNotFoundException {
     getProject().evaluationDependsOnChildren();
     Project rootProject = getProject().getRootProject();
-    DependencyUpdates evaluator = new DependencyUpdates(rootProject, resolutionStrategy, revision);
+    DependencyUpdates evaluator = new DependencyUpdates(rootProject, resolutionStrategy, getRevision());
     DependencyUpdatesReporter reporter = evaluator.run();
     return DependencyUpdatesReport.fromReporter(reporter);
   }

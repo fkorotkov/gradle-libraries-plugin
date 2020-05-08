@@ -11,15 +11,24 @@ import org.gradle.api.Action;
 import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.util.ConfigureUtil;
-import org.gradle.util.SingleMessageLogger;
 
 import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 
 public class UpdateLibrariesTask extends LibrariesBaseTask {
+  private Closure resolutionStrategy = null;
+
   @Internal
-  Closure resolutionStrategy = null;
+  public Closure getResolutionStrategy() {
+    return resolutionStrategy;
+  }
+
+  public void setResolutionStrategy(Closure resolutionStrategy) {
+    this.resolutionStrategy = resolutionStrategy;
+  }
+
   private Action<? super ResolutionStrategyWithCurrent> resolutionStrategyAction = null;
 
   @TaskAction
@@ -32,7 +41,7 @@ public class UpdateLibrariesTask extends LibrariesBaseTask {
 
     DependencyUpdatesReport report = runReport();
     ProjectLibraries projectLibraries = updateLibraries(report);
-    BufferedWriter dependenciesFileWriter = getDependenciesFileWriter();
+      BufferedWriter dependenciesFileWriter = new BufferedWriter(new FileWriter(getDependenciesFile()));
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     gson.toJson(projectLibraries, dependenciesFileWriter);
     dependenciesFileWriter.close();
