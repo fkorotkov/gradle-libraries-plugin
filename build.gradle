@@ -5,12 +5,11 @@ plugins {
 }
 
 version = System.getenv().getOrDefault("CIRRUS_TAG", "1.0")
-group = "com.github.fkorotkov"
 
 gradlePlugin {
   plugins {
     librariesPlugin {
-      id = 'com.github.fkorotkov'
+      id = 'com.github.fkorotkov.libraries'
       implementationClass = 'com.fkorotkov.gradle.libraries.LibrariesPlugin'
     }
   }
