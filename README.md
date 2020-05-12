@@ -1,7 +1,6 @@
 # Gradle Libraries Plugin
 
 [![Build Status](https://api.cirrus-ci.com/github/fkorotkov/gradle-libraries-plugin.svg)](https://cirrus-ci.com/github/fkorotkov/gradle-libraries-plugin)
-[![Download](https://api.bintray.com/packages/fkorotkov/maven/gradle-libraries-plugin/images/download.svg) ](https://bintray.com/fkorotkov/maven/gradle-libraries-plugin/_latestVersion)
 
 This plugin allows to specify versions of external libraries in a centralized place and use them across the project. It's specifically useful for Gradle multi-projects.
 
@@ -9,18 +8,11 @@ This plugin also uses [`com.github.ben-manes.versions`](https://github.com/ben-m
 
 ## Usage
 
-After applying the plugin:
+After applying the [plugin](https://plugins.gradle.org/plugin/com.github.fkorotkov.libraries):
 
 ```groovy
-apply plugin: 'com.fkorotkov.libraries'
-
-buildscript {
-  repositories {
-    jcenter()
-  }
-  dependencies {
-    classpath 'com.fkorotkov:gradle-libraries-plugin:1.0'
-  }
+plugins {
+  id("com.github.fkorotkov.libraries") version "1.1"
 }
 ```
 
