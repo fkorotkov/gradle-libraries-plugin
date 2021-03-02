@@ -1,5 +1,5 @@
 plugins {
-  id "com.gradle.plugin-publish" version '0.11.0'
+  id "com.gradle.plugin-publish" version '0.13.0'
   id "java-gradle-plugin"
   id "java-library"
 }
@@ -29,6 +29,7 @@ pluginBundle {
 }
 
 repositories {
+  gradlePluginPortal()
   jcenter()
   maven { setUrl("https://repo.gradle.org/gradle/repo") }
 }
@@ -36,6 +37,6 @@ repositories {
 dependencies {
   compileOnly gradleApi()
 
-  implementation 'com.github.ben-manes:gradle-versions-plugin:0.28.0'
+  implementation 'com.github.ben-manes:gradle-versions-plugin:0.36.0'
   implementation "com.google.code.gson:gson:2.8.6"
 }
